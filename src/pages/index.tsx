@@ -15,7 +15,7 @@ type Props = {
   posts: Post[];
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await fetch("http://localhost:3001/api/v1/posts");
   const posts = await res.json();
 
@@ -23,9 +23,9 @@ export async function getServerSideProps() {
     props: {
       posts,
     },
+    revalidate: 60 * 60 * 24, // 24 hours
   };
 }
-
 export default function Home({ posts }: Props) {
   const router = useRouter();
 
@@ -63,10 +63,22 @@ export default function Home({ posts }: Props) {
         <div>
           {posts.map((post) => (
             <div key={post.id} className={styles.postCard}>
-              <h2>{post.title}</h2>
+              <Link href={`posts/${post.id}`} className={styles.postCardBox}>
+                <h2>{post.title}</h2>
+              </Link>
               <p>{post.content}</p>
-              <button onClick={() => handleUpdate(post)}>Edit</button>
-              <button onClick={() => handleDelete(post.id)}>Delete</button>
+              <button
+                className={styles.editButton}
+                onClick={() => handleUpdate(post)}
+              >
+                Edit
+              </button>
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDelete(post.id)}
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>

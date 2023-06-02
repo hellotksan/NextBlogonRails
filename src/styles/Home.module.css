@@ -64,6 +64,11 @@
   margin: 0 0 10px 0;
 }
 
+.postCardBox {
+  text-decoration: none;
+  color: #2f3294;
+}
+
 .createButton {
   display: inline-block;
   padding: 10px 20px;
@@ -77,4 +82,31 @@
 
 .createButton:hover {
   background-color: #0056b3;
+}
+
+.editButton {
+  background-color: #11a42c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.editButton:hover {
+  background-color: #077810;
+}
+
+.deleteButton {
+  background-color: #e02424;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #9e1b1b;
 }
