@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styles from "../../styles/Post.module.css";
 
 interface Post {
@@ -23,7 +24,7 @@ export async function getStaticPaths() {
   // We'll pre-render only these paths at build time.
   // { fallback: 'blocking' } will server-render pages
   // on-demand if not generated at build time.
-  return { paths, fallback: "blocking" };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
@@ -34,14 +35,17 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
     props: {
       post,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every second
     revalidate: 60, // In seconds
   };
 }
 
 export default function Post({ post }: Props) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>{post.title}</h1>
